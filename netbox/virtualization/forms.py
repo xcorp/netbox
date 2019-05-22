@@ -8,6 +8,7 @@ from dcim.models import Device, DeviceRole, Interface, Platform, Rack, Region, S
 from extras.forms import AddRemoveTagsForm, CustomFieldBulkEditForm, CustomFieldForm, CustomFieldFilterForm
 from ipam.models import IPAddress
 from tenancy.forms import TenancyForm
+from tenancy.forms import TenancyFilterForm
 from tenancy.models import Tenant
 from utilities.forms import (
     add_blank_choice, APISelect, APISelectMultiple, BootstrapMixin, BulkEditForm, BulkEditNullBooleanSelect,
@@ -336,8 +337,8 @@ class VirtualMachineForm(BootstrapMixin, TenancyForm, CustomFieldForm):
     class Meta:
         model = VirtualMachine
         fields = [
-            'name', 'status', 'cluster_group', 'cluster', 'role', 'tenant', 'platform', 'primary_ip4', 'primary_ip6',
-            'vcpus', 'memory', 'disk', 'comments', 'tags', 'local_context_data',
+            'name', 'status', 'cluster_group', 'cluster', 'role', 'tenant_group', 'tenant', 'platform', 'primary_ip4',
+            'primary_ip6', 'vcpus', 'memory', 'disk', 'comments', 'tags', 'local_context_data',
         ]
         help_texts = {
             'local_context_data': "Local config context data overwrites all sources contexts in the final rendered "
@@ -348,7 +349,7 @@ class VirtualMachineForm(BootstrapMixin, TenancyForm, CustomFieldForm):
             "role": APISelect(
                 api_url="/api/dcim/device-roles/",
                 additional_query_params={
-                    "vm_role": "true"
+                    "vm_role": "True"
                 }
             ),
             'primary_ip4': StaticSelect2(),
@@ -480,7 +481,7 @@ class VirtualMachineBulkEditForm(BootstrapMixin, AddRemoveTagsForm, CustomFieldB
         widget=APISelect(
             api_url="/api/dcim/device-roles/",
             additional_query_params={
-                "vm_role": "true"
+                "vm_role": "True"
             }
         )
     )
@@ -520,8 +521,12 @@ class VirtualMachineBulkEditForm(BootstrapMixin, AddRemoveTagsForm, CustomFieldB
         ]
 
 
-class VirtualMachineFilterForm(BootstrapMixin, CustomFieldFilterForm):
+class VirtualMachineFilterForm(BootstrapMixin, TenancyFilterForm, CustomFieldFilterForm):
     model = VirtualMachine
+    field_order = [
+        'q', 'cluster_group', 'cluster_type', 'cluster_id', 'status', 'role', 'region', 'site', 'tenant_group',
+        'tenant', 'platform',
+    ]
     q = forms.CharField(
         required=False,
         label='Search'
@@ -582,7 +587,7 @@ class VirtualMachineFilterForm(BootstrapMixin, CustomFieldFilterForm):
             value_field="slug",
             null_option=True,
             additional_query_params={
-                'vm_role': 'true'
+                'vm_role': "True"
             }
         )
     )
@@ -590,16 +595,6 @@ class VirtualMachineFilterForm(BootstrapMixin, CustomFieldFilterForm):
         choices=VM_STATUS_CHOICES,
         required=False,
         widget=StaticSelect2Multiple()
-    )
-    tenant = FilterChoiceField(
-        queryset=Tenant.objects.all(),
-        to_field_name='slug',
-        null_label='-- None --',
-        widget=APISelectMultiple(
-            api_url='/api/tenancy/tenants/',
-            value_field="slug",
-            null_option=True,
-        )
     )
     platform = FilterChoiceField(
         queryset=Platform.objects.all(),

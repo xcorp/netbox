@@ -75,6 +75,8 @@ IFACE_FF_100ME_FIXED = 800
 IFACE_FF_1GE_FIXED = 1000
 IFACE_FF_1GE_GBIC = 1050
 IFACE_FF_1GE_SFP = 1100
+IFACE_FF_2GE_FIXED = 1120
+IFACE_FF_5GE_FIXED = 1130
 IFACE_FF_10GE_FIXED = 1150
 IFACE_FF_10GE_CX4 = 1170
 IFACE_FF_10GE_SFP_PLUS = 1200
@@ -83,6 +85,7 @@ IFACE_FF_10GE_XENPAK = 1310
 IFACE_FF_10GE_X2 = 1320
 IFACE_FF_25GE_SFP28 = 1350
 IFACE_FF_40GE_QSFP_PLUS = 1400
+IFACE_FF_50GE_QSFP28 = 1420
 IFACE_FF_100GE_CFP = 1500
 IFACE_FF_100GE_CFP2 = 1510
 IFACE_FF_100GE_CFP4 = 1520
@@ -149,6 +152,8 @@ IFACE_FF_CHOICES = [
         [
             [IFACE_FF_100ME_FIXED, '100BASE-TX (10/100ME)'],
             [IFACE_FF_1GE_FIXED, '1000BASE-T (1GE)'],
+            [IFACE_FF_2GE_FIXED, '2.5GBASE-T (2.5GE)'],
+            [IFACE_FF_5GE_FIXED, '5GBASE-T (5GE)'],
             [IFACE_FF_10GE_FIXED, '10GBASE-T (10GE)'],
             [IFACE_FF_10GE_CX4, '10GBASE-CX4 (10GE)'],
         ]
@@ -164,6 +169,7 @@ IFACE_FF_CHOICES = [
             [IFACE_FF_10GE_X2, 'X2 (10GE)'],
             [IFACE_FF_25GE_SFP28, 'SFP28 (25GE)'],
             [IFACE_FF_40GE_QSFP_PLUS, 'QSFP+ (40GE)'],
+            [IFACE_FF_50GE_QSFP28, 'QSFP28 (50GE)'],
             [IFACE_FF_100GE_CFP, 'CFP (100GE)'],
             [IFACE_FF_100GE_CFP2, 'CFP2 (100GE)'],
             [IFACE_FF_200GE_CFP2, 'CFP2 (200GE)'],
@@ -316,6 +322,7 @@ DEVICE_STATUS_PLANNED = 2
 DEVICE_STATUS_STAGED = 3
 DEVICE_STATUS_FAILED = 4
 DEVICE_STATUS_INVENTORY = 5
+DEVICE_STATUS_DECOMMISSIONING = 6
 DEVICE_STATUS_CHOICES = [
     [DEVICE_STATUS_ACTIVE, 'Active'],
     [DEVICE_STATUS_OFFLINE, 'Offline'],
@@ -323,6 +330,7 @@ DEVICE_STATUS_CHOICES = [
     [DEVICE_STATUS_STAGED, 'Staged'],
     [DEVICE_STATUS_FAILED, 'Failed'],
     [DEVICE_STATUS_INVENTORY, 'Inventory'],
+    [DEVICE_STATUS_DECOMMISSIONING, 'Decommissioning'],
 ]
 
 # Site statuses
@@ -343,6 +351,7 @@ STATUS_CLASSES = {
     3: 'primary',
     4: 'danger',
     5: 'default',
+    6: 'warning',
 }
 
 # Console/power/interface connection statuses
@@ -355,7 +364,7 @@ CONNECTION_STATUS_CHOICES = [
 
 # Cable endpoint types
 CABLE_TERMINATION_TYPES = [
-    'consoleport', 'consoleserverport', 'interface', 'poweroutlet', 'powerport', 'frontport', 'rearport',
+    'consoleport', 'consoleserverport', 'interface', 'poweroutlet', 'powerport', 'frontport', 'rearport', 'circuittermination',
 ]
 
 # Cable types
