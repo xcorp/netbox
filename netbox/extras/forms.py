@@ -10,8 +10,17 @@ from dcim.models import DeviceRole, Platform, Region, Site
 from tenancy.models import Tenant, TenantGroup
 from utilities.constants import COLOR_CHOICES
 from utilities.forms import (
-    add_blank_choice, APISelectMultiple, BootstrapMixin, BulkEditForm, BulkEditNullBooleanSelect, ColorSelect, 
+    add_blank_choice, APISelectMultiple, BootstrapMixin, BulkEditForm, BulkEditNullBooleanSelect, ColorSelect, ContentTypeSelect,
     CommentField, CSVChoiceFieldCustom, FilterChoiceField, LaxURLField,JSONField, SlugField, 
+
+
+###++<<<<<<< HEAD
+### +    add_blank_choice, APISelectMultiple, BootstrapMixin, BulkEditForm, BulkEditNullBooleanSelect, ColorSelect,
+### +    CommentField, ContentTypeSelect, FilterChoiceField, LaxURLField, JSONField, SlugField,
+###++=======
+###+     add_blank_choice, APISelectMultiple, BootstrapMixin, BulkEditForm, BulkEditNullBooleanSelect, ContentTypeSelect,
+###+     CSVChoiceFieldCustom, FilterChoiceField, LaxURLField, JSONField, SlugField,
+###++>>>>>>> bcb4cc6efd63701d285d5919de479c748bc5cc91
 )
 from .constants import (
     CF_FILTER_DISABLED, CF_TYPE_BOOLEAN, CF_TYPE_DATE, CF_TYPE_INTEGER, CF_TYPE_SELECT, CF_TYPE_URL,
