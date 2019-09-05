@@ -10,8 +10,8 @@ from dcim.models import DeviceRole, Platform, Region, Site
 from tenancy.models import Tenant, TenantGroup
 from utilities.constants import COLOR_CHOICES
 from utilities.forms import (
-    add_blank_choice, APISelectMultiple, BootstrapMixin, BulkEditForm, BulkEditNullBooleanSelect, ColorSelect,
-    CommentField, ContentTypeSelect, FilterChoiceField, LaxURLField, JSONField, SlugField,
+    add_blank_choice, APISelectMultiple, BootstrapMixin, BulkEditForm, BulkEditNullBooleanSelect, ColorSelect, 
+    CommentField, CSVChoiceFieldCustom, FilterChoiceField, LaxURLField, SlugField, 
 )
 from .constants import (
     CF_FILTER_DISABLED, CF_TYPE_BOOLEAN, CF_TYPE_DATE, CF_TYPE_INTEGER, CF_TYPE_SELECT, CF_TYPE_URL,
@@ -74,7 +74,7 @@ def get_custom_fields_for_model(content_type, filterable_only=False, bulk_edit=F
                     default_choice = cf.choices.get(value=initial).pk
                 except ObjectDoesNotExist:
                     pass
-            field = forms.TypedChoiceField(choices=choices, coerce=int, required=cf.required, initial=default_choice)
+            field = CSVChoiceFieldCustom(choices=choices, coerce=int, required=cf.required, initial=default_choice)
 
         # URL
         elif cf.type == CF_TYPE_URL:
